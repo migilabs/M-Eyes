@@ -1,6 +1,6 @@
 site_name: M-Eyes
 site_description: Open-source DDI platform (DNS, DHCP, IPAM) with Fortinet ecosystem integration
-repo_url: https://github.com/FreddyMcFett/M-Eyes
+repo_url: https://github.com/migilabs/M-Eyes
 theme:
   name: material
   logo: img/logo.svg

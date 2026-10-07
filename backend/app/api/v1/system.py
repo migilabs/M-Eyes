@@ -19,8 +19,8 @@ from app.version import __version__
 
 router = APIRouter(prefix="/system", tags=["system"])
 
-RELEASES_API = "https://api.github.com/repos/FreddyMcFett/M-Eyes/releases/latest"
-RELEASES_URL = "https://github.com/FreddyMcFett/M-Eyes/releases"
+RELEASES_API = "https://api.github.com/repos/migilabs/M-Eyes/releases/latest"
+RELEASES_URL = "https://github.com/migilabs/M-Eyes/releases"
 
 # The release pipeline tags the GitHub release a few minutes *before* the
 # multi-arch container images finish building and land in GHCR. Advertising the
@@ -29,7 +29,7 @@ RELEASES_URL = "https://github.com/FreddyMcFett/M-Eyes/releases"
 # offering an update we confirm the candidate tag's images are actually
 # pullable. These names/registry must match the image refs in docker-compose.yml.
 GHCR_REGISTRY = "ghcr.io"
-GHCR_OWNER = "freddymcfett"
+GHCR_OWNER = "migilabs"
 RELEASE_IMAGES = ("m-eyes-api", "m-eyes-frontend")
 # Manifest media types we accept (multi-arch index + single image, OCI + Docker).
 _GHCR_MANIFEST_ACCEPT = (
@@ -211,11 +211,14 @@ def _compute_update_status(force: bool = False) -> dict:
         try:
             # Explicit, tight timeouts (connect/read) so a blocked egress fails
             # fast instead of tying up the worker — the browser never waits long
-            # enough to surface a "Failed to fetch".
+            # enough to surface a "Failed to fetch". Redirects are followed so
+            # a renamed owner or repo (GitHub answers with a 301) doesn't break
+            # the check for installs that still carry the old URL.
             response = httpx.get(
                 RELEASES_API,
                 timeout=httpx.Timeout(connect=3.0, read=4.0, write=4.0, pool=4.0),
                 headers={"Accept": "application/vnd.github+json"},
+                follow_redirects=True,
             )
             response.raise_for_status()
             release = response.json()

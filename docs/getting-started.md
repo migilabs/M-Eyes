@@ -3,7 +3,7 @@
 ## Option 1 — Docker Compose (full stack)
 
 ```bash
-git clone https://github.com/FreddyMcFett/M-Eyes.git
+git clone https://github.com/migilabs/M-Eyes.git
 cd M-Eyes
 docker compose up -d --build
 ```
