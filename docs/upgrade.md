@@ -51,13 +51,32 @@ below.
 ## Upgrading manually on the host
 
 Every release publishes versioned images to GitHub Container Registry
-(`ghcr.io/freddymcfett/m-eyes-api` and `ghcr.io/freddymcfett/m-eyes-frontend`),
+(`ghcr.io/migilabs/m-eyes-api` and `ghcr.io/migilabs/m-eyes-frontend`),
 so a manual upgrade is just:
 
 ```bash
 docker compose pull
 docker compose up -d
 ```
+
+### Installs from before the move to `migilabs`
+
+The GitHub account that publishes M-Eyes was renamed from `FreddyMcFett` to
+`migilabs`. The images now live under `ghcr.io/migilabs/`, and the registry
+no longer serves the old `ghcr.io/freddymcfett/` path. Installs set up before
+the rename still point there, and their in-app update check can't reach the
+moved release either. Fix this once by hand on the host, in the M-Eyes folder:
+
+```bash
+git remote set-url origin https://github.com/migilabs/M-Eyes.git
+git pull
+docker compose pull
+docker compose up -d
+```
+
+If you changed `docker-compose.yml` locally, edit the two `image:` lines
+(`m-eyes-api` and `m-eyes-frontend`) to `ghcr.io/migilabs/...` instead of
+pulling. From then on in-app updates work again.
 
 ### Pinning a version
 
@@ -73,8 +92,8 @@ you decide to move.
 
 ### `docker compose pull` fails with `error from registry: denied`
 
-A `denied` error on `ghcr.io/freddymcfett/m-eyes-api` or
-`ghcr.io/freddymcfett/m-eyes-frontend` (while the third-party images pull
+A `denied` error on `ghcr.io/migilabs/m-eyes-api` or
+`ghcr.io/migilabs/m-eyes-frontend` (while the third-party images pull
 fine) means the registry will not serve those images to you. Two causes:
 
 1. **The images aren't published yet.** Releases publish them automatically;

@@ -19,7 +19,7 @@ services:
   api:
     # Published images make upgrades a `docker compose pull && up -d`;
     # `docker compose build` still works for source installs.
-    image: ghcr.io/freddymcfett/m-eyes-api:${MEYES_VERSION:-latest}
+    image: ghcr.io/migilabs/m-eyes-api:${MEYES_VERSION:-latest}
     build:
       context: .
       dockerfile: deploy/api/Dockerfile
@@ -55,7 +55,7 @@ services:
       - "8000:8000"
 
   frontend:
-    image: ghcr.io/freddymcfett/m-eyes-frontend:${MEYES_VERSION:-latest}
+    image: ghcr.io/migilabs/m-eyes-frontend:${MEYES_VERSION:-latest}
     build:
       context: .
       dockerfile: deploy/frontend/Dockerfile
