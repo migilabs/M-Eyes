@@ -2,6 +2,13 @@
 
 All notable changes are generated automatically from conventional commits.
 
+## [1.13.1](https://github.com/migilabs/M-Eyes/compare/v1.13.0...v1.13.1) (2026-10-07)
+
+
+### Bug Fixes
+
+* pull images and releases from the renamed migilabs account ([ad0aeac](https://github.com/migilabs/M-Eyes/commit/ad0aeacc42beeca74b25b9c85bd5ce7ddcc81ffd))
+
 # [1.13.0](https://github.com/migilabs/M-Eyes/compare/v1.12.0...v1.13.0) (2026-06-30)
 
 
